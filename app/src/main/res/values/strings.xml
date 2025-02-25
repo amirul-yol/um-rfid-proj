@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RFID Inventory</string>
+    
+    <!-- Navigation -->
+    <string name="title_scanner">Scanner</string>
+    <string name="title_inventory">Inventory</string>
+    <string name="title_item_details">Item Details</string>
+    
+    <!-- Scanner Fragment -->
+    <string name="scanner_status">Scanner Status</string>
+    <string name="scanner_ready">Ready to scan</string>
+    <string name="start_scanning">Start Scanning</string>
+    <string name="ready_to_scan">Ready to scan RFID tags</string>
+    <string name="non_c66_device_message">RFID scanning is only available on C66 devices.\nUI preview mode active.</string>
+    
+    <!-- Inventory Fragment -->
+    <string name="no_items_found">No items found</string>
+    <string name="loading">Loading…</string>
+    
+    <!-- Item Details Fragment -->
+    <string name="item_info">Item Information</string>
+    <string name="movement_history">Movement History</string>
+</resources>

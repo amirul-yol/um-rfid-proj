@@ -1,0 +1,480 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+### Added
+- Initial project setup using Android Studio with "No Activity" template
+- Project documentation files (Overview.md, Changelog.md, README.md)
+- Basic project structure and configuration
+- Main Activity setup with Material Design components
+- Bottom navigation structure
+- Basic app theme and resources
+- Navigation graph setup with three main destinations
+- Basic fragment implementations:
+  - ScannerFragment for RFID scanning
+  - InventoryFragment for item listing
+  - ItemDetailsFragment for detailed item view
+- Navigation actions and arguments configuration
+- Fragment layouts implementation:
+  - Scanner screen with status card and scan button
+  - Inventory list with RecyclerView and empty state
+  - Item details with info card and movement history
+- Additional string resources for all screens
+- Basic UI structure with three main screens: Scanner, Inventory List, and Item Details
+- Bottom navigation implementation
+- Navigation between fragments using Safe Args
+- Material Design components for clean UI
+- Basic layouts for all main screens
+- Device compatibility check utility (DeviceUtils) to handle non-C66 devices gracefully
+- UI preview mode for emulator testing
+- Backend project structure setup
+  - Express.js server configuration with clean modular architecture
+  - MariaDB connection module with connection pooling
+  - Service layer for business logic separation
+  - RESTful API endpoints for inventory management
+    - Basic CRUD operations
+    - RFID tag lookup endpoint
+    - Movement tracking functionality
+  - Environment configuration
+  - Error handling middleware
+  - Health check endpoint
+- Database schema initialization
+  - Inventory table with RFID tracking
+  - Movement history table for location tracking
+- API Documentation in backend/README.md
+- Basic CRUD operations for inventory items
+- Android app API integration
+  - ApiClient implementation with Volley
+  - Clean model classes for data handling
+  - Connection test fragment for API verification
+  - Error handling and progress indicators
+- Build configuration for C66 device
+  - Added DeviceAPI SDK (version 20231208)
+  - Included native libraries for RFID functionality
+  - Configured debug and release builds
+- RFID Integration Analysis
+  - Analyzed demo app architecture and components
+  - Identified key RFID controller classes and interfaces
+  - Documented initialization and tag reading processes
+  - Mapped out required service implementations
+  - Created integration plan based on demo patterns
+- Base RFID Controller Implementation
+  - Created BaseRFIDActivity for RFID lifecycle management
+  - Implemented RFID reader initialization and cleanup
+  - Added status checking and error handling
+  - Updated MainActivity to use RFID base class
+- RFID Scanner Service Implementation
+  - Created RFIDTag model for tag data management
+  - Implemented RFIDScannerService for tag operations
+  - Added continuous scanning with callbacks
+  - Implemented tag data processing and deduplication
+  - Added error handling and state management
+- RFID UI Integration
+  - Updated Scanner fragment with Material Design
+  - Added real-time tag list with RecyclerView
+  - Implemented start/stop scanning controls
+  - Added tag count and status indicators
+  - Created clean card-based tag item layout
+  - Added error handling with Snackbar notifications
+- Basic RFID scanning functionality
+  - Start/Stop scanning button
+  - Real-time tag display
+  - RSSI signal strength display
+  - Simple status indicators
+  - Clear tag list on new scan
+- Database integration for RFID scanning
+  - Real-time tag lookup in database
+  - Display item name and location
+  - Fallback for unknown tags
+  - Clean and simple UI updates
+- Separated RFID scan results into two tables
+  - "Registered Items" table shows items found in database with name and location
+  - "Unregistered Items" table shows unknown tags with RSSI values
+  - Clean UI with distinct sections and proper spacing
+  - Automatic clearing of both tables when starting new scan
+- Item registration functionality for unregistered tags
+  - New registration screen with name and description fields
+  - Auto-filled RFID tag field (non-editable)
+  - Default location set to "Outside Room"
+  - "Register Selected Tag" button appears after scanning stops
+  - Clean Material Design UI with proper input validation
+- Scrollable scanning screen
+  - Wrapped main layout in ScrollView for better UX
+  - Fixed text views to show all scanned items
+  - Added minimum height to tag lists for better visibility
+  - Improved button text style for consistency
+- Clear functionality in app bar
+  - Added clear icon in the top-right corner
+  - One-tap to clear all scanned items
+  - Resets both registered and unregistered lists
+  - Clean Material Design integration
+
+### Changed
+- Updated build system to use Gradle with Kotlin DSL
+- Modified AndroidManifest.xml for Material Design theme
+- Updated app name and string resources
+- Temporarily excluded native libraries (libDeviceAPIM.so, libDeviceAPIQ.so, libIDFingerprintAlg.so) when building for emulator testing
+  - **IMPORTANT**: These libraries must be included when building for production on C66 devices
+  - Remove the `packagingOptions` block in app/build.gradle.kts when building for production
+- Updated ScannerFragment to show appropriate messages on non-C66 devices
+- Disabled RFID scanning functionality when running on emulator
+- Switched to DarkActionBar theme for better UI consistency
+- Improved activity_main.xml layout using ConstraintLayout
+- Enhanced error handling in MainActivity
+- Switched to Material Design theme for better UI consistency
+- Improved error handling in API client
+  - Added proper JSONException handling
+  - Enhanced error messages for better debugging
+  - Added logging for network errors
+- Changed backend server port from 3000 to 3001
+  - Updated .env to use PORT=3001
+  - Updated Android ApiClient BASE_URL to use port 3001
+  - Avoids conflict with existing services on production server
+- Updated backend development setup
+  - Switched from nodemon to node --watch for better compatibility
+  - Updated package.json with more specific dependency versions
+  - Improved development scripts configuration
+- Updated build configuration
+  - Removed JNI library exclusions
+  - Added debug signing for release builds
+  - Added debug suffix to avoid conflicts
+  - Properly included C66 device libraries
+- Refactored MainActivity
+  - Now extends BaseRFIDActivity
+  - Added RFID status logging
+  - Improved error handling and lifecycle management
+- Enhanced Scanner UI
+  - Switched to card-based layout
+  - Added clear button for tag list
+  - Improved status visibility
+  - Added real-time tag count
+  - Optimized layout for better usability
+- Updated AndroidManifest.xml
+  - Removed deprecated package attribute
+  - Added required RFID permissions
+  - Added storage permissions
+  - Added network permissions
+  - Fixed manifest merge issues
+  - Switched to AppCompat theme
+  - Properly configured MainActivity
+- Updated build configuration
+  - Created app/build.gradle with proper dependencies
+  - Created root build.gradle with repository setup
+  - Added proper Android plugin version
+  - Configured JNI libraries path
+  - Added navigation dependencies
+- Updated build configuration
+  - Removed Groovy build files
+  - Updated Kotlin build files
+  - Fixed repository configuration
+  - Added proper dependencies
+  - Configured JNI libraries path
+  - Added navigation dependencies
+  - Fixed version catalog issues
+  - Properly configured sourceSets
+- Updated RFIDScannerService
+  - Fixed callback implementation
+  - Added proper RSSI handling
+  - Added main thread callbacks
+  - Improved error handling
+  - Fixed type conversion issues
+  - Added thread safety
+- Simplified build configuration
+  - Removed unused test dependencies
+  - Kept only essential dependencies
+  - Streamlined build process
+  - Reduced build complexity
+  - Improved build reliability
+- Cleaned up project structure
+  - Removed auto-generated test directories
+  - Removed unused test files
+  - Simplified project hierarchy
+  - Removed unnecessary boilerplate code
+- Fixed UI configuration
+  - Updated theme to use NoActionBar
+  - Properly configured MaterialToolbar
+  - Fixed navigation setup
+  - Added proper theme inheritance
+  - Fixed toolbar integration
+- Extreme simplification of app architecture
+  - Removed fragments and navigation
+  - Removed Material Design components
+  - Switched to single activity design
+  - Using basic Android views only
+  - Simplified layout hierarchy
+- Simplified UI implementation
+  - Removed complex navigation
+  - Removed bottom navigation
+  - Removed toolbar/app bar
+  - Using simple LinearLayout
+  - Basic Android widgets only
+- Simplified app to focus on RFID scanning
+  - Removed API test screens
+  - Single screen for scanning
+  - Basic UI elements only
+  - Direct RFID reader integration
+  - Real-time tag updates
+- Streamlined user interface
+  - One main action button
+  - Clear status display
+  - Scrollable tag list
+  - Simple linear layout
+  - No complex UI elements
+- Improved RFID scanning implementation
+  - Switched to single tag inventory mode
+  - Added continuous scanning thread
+  - Set maximum power for better reading
+  - Added small delay between scans
+  - Improved error handling
+- Updated RFIDTag model
+  - Changed RSSI handling to accept String input
+  - Added error handling for RSSI parsing
+  - Added default RSSI value (-100) for parsing errors
+  - Improved timestamp handling
+  - Better code organization
+- Improved RFID scanning performance
+  - Switched to continuous inventory mode
+  - Removed single tag scanning
+  - Removed scan delay
+  - Better error handling
+  - Cleaner status display
+- Enhanced UI feedback
+  - Better error messages
+  - Hide status when ready
+  - Show toasts for errors
+  - Cleaner button text
+  - Improved visibility states
+- Enhanced RFID tag display
+  - Now shows item name from database
+  - Shows location information
+  - Better formatting for scanned items
+  - Unknown tags shown with RSSI only
+- Improved scanning screen UX
+  - Made each section (Registered/Unregistered) independently scrollable
+  - Better space utilization with equal height sections
+  - Maintained fixed header and button positions
+  - Cleaner visual separation between sections
+- Updated API configuration
+  - Moved API URL to environment variables
+  - Improved security by removing hardcoded values
+  - Better configuration management
+
+### Fixed
+- Fixed XML syntax error in fragment_item_details.xml
+- Fixed navigation implementation to use simpler Bundle approach instead of Safe Args
+- Fixed app crash on emulator by implementing device compatibility checks
+- Fixed layout issues with AppBarLayout and bottom navigation
+- Fixed theme-related crashes by using proper Material Design theme
+- Database connection issue resolved
+  - Updated port from 8090 to 3306 (standard MariaDB port)
+  - Successfully connected to MariaDB server
+  - Database tables initialized
+- Added internet permissions to Android app
+- Enabled cleartext traffic for development
+- Fixed view binding configuration in build.gradle
+- Fixed JSONException handling in ApiClient
+  - Added proper try-catch blocks for JSON operations
+  - Improved error reporting for JSON parsing failures
+- Fixed table schema mismatch
+  - Updated service layer to use correct tables (items, movements)
+  - Fixed foreign key relationships with locations table
+  - Added proper error handling for required fields
+- Fixed nodemon compatibility issue
+  - Replaced nodemon with native Node.js file watch
+  - Removed dependency on bash/shell scripts
+  - Improved cross-platform compatibility
+- Fixed API integration issues
+  - Successfully retrieving all items (Found 3 items)
+  - Working RFID tag lookup functionality
+  - Proper item creation flow
+- Fixed build configuration for C66 device
+  - Properly included native RFID libraries
+  - Added correct signing configuration
+  - Fixed package name conflicts with debug suffix
+- Fixed AndroidManifest.xml configuration
+  - Removed deprecated package attribute
+  - Fixed theme resource error
+  - Added proper activity configuration
+  - Added network security configuration
+- Fixed build configuration issues
+  - Added missing Gradle configuration
+  - Fixed namespace configuration
+  - Added required dependencies
+  - Properly configured JNI libraries
+  - Fixed theme resource error
+- Fixed build configuration issues
+  - Removed conflicting Groovy build files
+  - Fixed repository configuration in settings.gradle.kts
+  - Updated dependency declarations to Kotlin DSL
+  - Fixed version catalog references
+  - Properly configured JNI libraries
+  - Fixed dependency resolution mode
+- Fixed RFIDScannerService implementation
+  - Fixed IUHFInventoryCallback interface usage
+  - Fixed RSSI string to integer conversion
+  - Added proper thread handling for callbacks
+  - Fixed inventory start/stop logic
+  - Added error handling for RSSI parsing
+- Fixed build configuration issues
+  - Removed unnecessary test dependencies
+  - Fixed build failures
+  - Simplified dependency management
+  - Kept only required libraries
+  - Improved build stability
+- Fixed project structure
+  - Removed app/src/test directory
+  - Removed app/src/androidTest directory
+  - Fixed build errors from test files
+  - Cleaned up project layout
+- Fixed UI issues
+  - Fixed blank screen issue
+  - Fixed toolbar not showing
+  - Fixed navigation configuration
+  - Fixed theme inheritance
+  - Fixed action bar conflicts
+- Fixed blank screen issues
+  - Removed complex navigation system
+  - Simplified to single activity
+  - Fixed layout visibility
+  - Removed unnecessary UI layers
+  - Direct view access in MainActivity
+- Fixed UI focus
+  - Switched to RFID scanning
+  - Removed test UI elements
+  - Fixed screen layout
+  - Added proper tag display
+  - Added scanning controls
+- Fixed RFID scanning not detecting tags
+  - Changed scanning method to inventorySingleTag
+  - Added dedicated scanning thread
+  - Set maximum power level (30)
+  - Added proper thread cleanup
+  - Fixed tag data handling
+- Fixed build errors
+  - Fixed RSSI type mismatch
+  - Added proper String to int conversion
+  - Added error handling for invalid RSSI values
+  - Fixed model class structure
+  - Improved code robustness
+- Fixed scanning performance
+  - Using continuous inventory mode
+  - Removed unnecessary delays
+  - Improved tag detection speed
+  - Better error handling
+  - Cleaner status display
+- Improved tag information display
+  - Added database lookup for each tag
+  - Better error handling for unknown tags
+  - Cleaner text formatting
+- Fixed RFID tag lookup issue where tags from `items` table were not being found
+  - Updated backend `getItemByRfidTag` to join with `locations` table
+  - Now properly returns location name in API response
+  - Fixed response format to match Android app expectations
+- Fixed item registration error where RFID tag was not being properly sent to the server
+  - Added RFID tag validation before submission
+  - Improved error handling and user feedback
+  - Properly format request body with snake_case field names
+  - Better error messages from server responses
+- Fixed item registration success handling
+  - Improved response parsing to handle different backend response formats
+  - Show success message even when response format differs
+  - Prevent false error messages when item is actually created
+  - Better handling of backend response data structure
+- Fixed default location not being set for new items
+  - Changed API request to use 'current_location' field instead of 'location_id'
+  - Properly send default location (id=5) when registering new items
+  - Maintain consistency with database schema
+  - Better field name mapping between app and backend
+
+### Removed
+- Test dependencies and configurations
+  - Removed JUnit test dependency
+  - Removed Espresso UI test dependency
+  - Removed Android test configurations
+  - Removed test source directories
+  - Removed auto-generated test files
+- Removed complex UI components
+  - Removed Navigation component
+  - Removed Material Design
+  - Removed Fragments
+  - Removed complex layouts
+  - Removed unnecessary abstractions
+- Removed test functionality
+  - Removed API test screens
+  - Removed test buttons
+  - Removed database tests
+  - Removed unnecessary UI elements
+  - Focused on core RFID features
+
+### Project Milestones
+- ✅ Phase 1: Basic UI Implementation
+  - Completed Material Design UI
+  - Implemented core screens
+  - Clean and simple styling
+- ✅ Phase 2: Backend Development
+  - Set up Express.js API
+  - Configured MySQL database
+  - Implemented CRUD operations
+- ✅ Phase 3: RFID Integration
+  - Integrated DeviceAPI SDK
+  - Implemented hardware communication
+  - Added tag data processing
+- ✅ Phase 4: Frontend-Backend Integration (Completed on 2025-02-25)
+  - Integrated all API endpoints
+  - Implemented real-time scanning
+  - Added error handling
+  - Enhanced UX with scrollable sections
+  - Added data clearing functionality
+
+### Next Steps
+- Consider implementing future enhancements:
+  - Offline caching
+  - User authentication
+  - Additional features based on requirements
+
+### Known Issues
+- ~~Network errors in Android app~~ (RESOLVED)
+  - ~~GET ALL ITEMS returning "Error: Network Error"~~
+  - ~~CREATE ITEM returning "Error: Network Error"~~
+  - ~~RFID LOOKUP returning "Error: Network Error"~~
+- ~~Backend deployment issues~~ (RESOLVED)
+  - ~~Permission denied for nodemon (resolved by switching to node --watch)~~
+  - ~~Port 3000 already in use (switched to port 3001)~~
+- RFID functionality only available on C66 devices (by design)
+- Scanner showing "UI preview mode active" (Expected - Phase 3 not started)
+
+### Completed Phases
+- Phase 1: Basic UI Implementation
+  - Material Design components implemented
+  - Clean and simple styling achieved
+  - Core screens completed and functional
+  - UI preview mode for development testing
+- Phase 2: Backend Development
+  - Express.js API server setup
+  - MariaDB database connection 
+  - Basic CRUD operations implementation
+    - Created database schema
+    - Implemented service layer
+    - Added movement tracking
+    - Added error handling
+  - Android app API integration
+    - Implemented ApiClient with proper error handling
+    - Added connection testing UI
+    - Added view binding support
+    - Successfully tested all API endpoints
+- Phase 3: RFID Integration (In Progress)
+  - Base RFID Controller
+    - Created BaseRFIDActivity
+    - Implemented device lifecycle management
+    - Added status checking and error handling
+  - RFID Scanner Service Implementation
+    - Created RFIDTag model for tag data management
+    - Implemented RFIDScannerService for tag operations
+    - Added continuous scanning with callbacks
+    - Implemented tag data processing and deduplication
+    - Added error handling and state management

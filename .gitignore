@@ -1,0 +1,28 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Ignore demo project
+uhf-uart-demo/
+
+# Ignore sensitive files
+rfid_inventory.sql
+.env
+node_modules
+package-lock.json
+app/gradle.properties
+
+# Ignore misc
+commands.txt
